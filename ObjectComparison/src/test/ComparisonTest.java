@@ -31,16 +31,16 @@ public class ComparisonTest {
 				fields2[i].setAccessible(true);
 				Object object1 = fields1[i].get(o1);
 				Object object2 = fields2[i].get(o2);
-				System.out.println("field name: " + fields1[i].getName() + ", Field value in first object: " + object1 + ", Field value in second object: " + object2 + ", Are equal: " + areEqual(object1, object2, type));
+				if (!areEqual(object1, object2, type)) {
+					System.out.println("|field: " + fields1[i].getName() + "| Field value changed from: " + object1 + " to: " + object2);
+					
+				}
 			}
 		}
 	}
 	
 	private static boolean areEqual(Object object1, Object object2, Class<?> type) {
-		if (WRAPPER_TYPES.contains(type)) {
-			return object1 == object2;
-		}
-		if (PREMITIVE_TYPES.contains(type)) {
+		if (WRAPPER_TYPES.contains(type) || PREMITIVE_TYPES.contains(type)) {
 			return object1.equals(object2);
 		}
 		return false;
